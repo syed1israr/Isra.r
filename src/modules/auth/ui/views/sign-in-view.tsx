@@ -31,7 +31,7 @@ export const SignInView = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setloading] = useState(false);
-
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -165,7 +165,7 @@ export const SignInView = () => {
             </form>
           </Form>
 
-          <div className="bg-radial from-green-700 to-green-900 hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="bg-radial from-sidebar-accent to-sidebar hidden md:flex flex-col gap-y-4 items-center justify-center">
             <img src="/logo.svg" alt="Logo" className="h-[92px] w-[92px]" />
             <p className="text-2xl font-semibold text-white">Isra.r</p>
           </div>

@@ -22,6 +22,7 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 import { OctagonAlertIcon } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 
 const formSchema = z
@@ -40,7 +41,7 @@ export const SignUpView = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,7 +65,7 @@ export const SignUpView = () => {
       {
         onSuccess: () => {
           setLoading(false);
-          
+          router.push("/")
         },
         onError: ({ error }) => {
           setLoading(false);
@@ -207,7 +208,7 @@ export const SignUpView = () => {
             </form>
           </Form>
 
-          <div className="bg-radial from-green-700 to-green-900 hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="bg-radial from-sidebar-accent to-sidebar hidden md:flex flex-col gap-y-4 items-center justify-center">
             <img src="/logo.svg" alt="Logo" className="h-[92px] w-[92px]" />
             <p className="text-2xl font-semibold text-white">Isra.r</p>
           </div>
