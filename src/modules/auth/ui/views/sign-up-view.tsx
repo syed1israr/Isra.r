@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,6 +21,8 @@ import {
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { OctagonAlertIcon } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+
 
 const formSchema = z
   .object({
@@ -35,7 +37,7 @@ const formSchema = z
   });
 
 export const SignUpView = () => {
-  const router = useRouter();
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -57,11 +59,12 @@ export const SignUpView = () => {
         name: values.name,
         email: values.email,
         password: values.password,
+        callbackURL:"/"
       },
       {
         onSuccess: () => {
           setLoading(false);
-          router.push('/');
+          
         },
         onError: ({ error }) => {
           setLoading(false);
@@ -70,6 +73,29 @@ export const SignUpView = () => {
       }
     );
   };
+
+
+    const onSocial = (provider : "github" | "google") => {
+    setError(null);
+    setLoading(true);
+    authClient.signIn.social(
+      {
+        provider : provider,
+        callbackURL:"/"
+      },
+      {
+        onSuccess: () => {
+          setLoading(false);
+      
+        },
+        onError: ({ error }) => {
+          setLoading(false);
+          setError(error.message);
+        },
+      }
+    );
+  }
+
 
   return (
     <div className="flex flex-col gap-6">
@@ -157,11 +183,17 @@ export const SignUpView = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <Button disabled={loading} variant="outline" type="button" className="w-full">
-                    Google
+                  <Button
+                  
+                  onClick={()=> onSocial("google")}
+                                     
+                                     disabled={loading} variant="outline" type="button" className="w-full">
+                     <FaGoogle/>
                   </Button>
-                  <Button disabled={loading} variant="outline" type="button" className="w-full">
-                    GitHub
+                  <Button 
+ onClick={()=> onSocial("github")}
+                  disabled={loading} variant="outline" type="button" className="w-full">
+                    <FaGithub/>
                   </Button>
                 </div>
 

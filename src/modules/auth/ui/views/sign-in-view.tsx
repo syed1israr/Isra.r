@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ const formSchema = z.object({
 });
 
 export const SignInView = () => {
-  const router = useRouter();
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setloading] = useState(false);
 
@@ -47,11 +47,12 @@ export const SignInView = () => {
       {
         email: values.email,
         password: values.password,
+        callbackURL:"/"
       },
       {
         onSuccess: () => {
          setloading(false);
-          router.push('/');
+         
         },
         onError: ({ error }) => {
           setError(error.message);
@@ -62,6 +63,28 @@ export const SignInView = () => {
 
 
   };
+
+     const onSocial = (provider : "github" | "google") => {
+      setError(null);
+      setloading(true);
+      authClient.signIn.social(
+        {
+          provider : provider,
+          callbackURL:"/"
+        },
+        {
+          onSuccess: () => {
+            setloading(false);
+            
+          },
+          onError: ({ error }) => {
+            setloading(false);
+            setError(error.message);
+          },
+        }
+      );
+    }
+
 
   return (
     <div className="flex flex-col gap-6">
@@ -119,11 +142,17 @@ export const SignInView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button  disabled={loading}  variant="outline" type="button" className="w-full">
-                    Google
+                  <Button  
+                     onClick={()=> onSocial("google")}
+                  disabled={loading}  variant="outline" type="button" className="w-full">
+                    <FaGoogle/>
+    
                   </Button>
-                  <Button  disabled={loading}  variant="outline" type="button" className="w-full">
-                    Github
+                  <Button 
+                   onClick={()=> onSocial("github")}
+                  disabled={loading}  variant="outline" type="button" className="w-full">
+                    <FaGithub/>
+                    
                   </Button>
                 </div>
                 <div className="text-center text-sm">
