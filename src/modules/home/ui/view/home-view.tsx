@@ -12,7 +12,7 @@ export const HomeView = () => {
   return (
     <div className='flex flex-col items-center justify-center h-screen'>
       <p className='bg-blue-50 text-teal-600 text-4xl'>
-        Logged in as {session?.user?.name || 'Unknown User'}
+        Logged Email :- {session?.user?.email || 'Unknown User'}
       </p>
       <Button
         className='mt-4'
