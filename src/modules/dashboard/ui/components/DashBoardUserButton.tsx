@@ -6,11 +6,15 @@ import { authClient } from "@/lib/auth-client"
 import { GenerateAvatar  } from "@/components/generator"
 import { ChevronDownIcon, CreditCardIcon, LogOutIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button"
 
 
 const DashBoardUserButton = () => {
   const { data, isPending } = authClient.useSession()
-
+  const isMobile = useIsMobile();
+ 
   if (isPending || !data?.user) return null
   const router = useRouter();
   const imageUrl = data.user.image ?? undefined
@@ -20,6 +24,51 @@ const DashBoardUserButton = () => {
             onSuccess:()=>{ router.push("/sign-in")}
         }
     })
+  }
+
+  if( isMobile ) {
+    return(
+      <Drawer>
+        <DrawerTrigger className="rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 overflow-hidden">
+         <Avatar className="w-10 h-10">
+            { data.user.image ? (  <AvatarImage
+            src={imageUrl}
+            className="w-10 h-10 rounded-full object-cover"
+          />) : <GenerateAvatar 
+                seed={data.user.name}
+                variant="initials"
+                className="size-9 mr-3"
+          /> }
+         
+        </Avatar>
+         <main className="flex flex-col gap-0.5 text-left overflow-hidden flex-1 min-w-0 ml-2">
+           <p className="text-sm truncate w-full">
+            {data.user.name}
+           </p>
+           <p className="text-sm truncate w-full">
+            {data.user.email}
+           </p>
+          </main>
+          <ChevronDownIcon className="size-4 shrink-0"/>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>{data.user.name}</DrawerTitle>
+            <DrawerDescription>{data.user.email}</DrawerDescription>
+          </DrawerHeader>
+          <DrawerFooter>
+            <Button onClick={()=>{}} variant={"outline"}>
+              <CreditCardIcon className="size-4 text-black" />
+              Billing
+            </Button>
+            <Button onClick={()=>{onLogOut}} variant={"outline"} >
+              <LogOutIcon  className="size-4 text-black" />
+              Logout
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    )
   }
   return (
     <DropdownMenu>
