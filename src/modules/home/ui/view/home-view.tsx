@@ -1,15 +1,20 @@
 'use client';
 import React from 'react';
 import { authClient } from '@/lib/auth-client';
+import { useQuery } from '@tanstack/react-query';
+import { useTRPC } from '@/trpc/client';
 
 export const HomeView = () => {
   const { data: session } = authClient.useSession();
+  const trpc = useTRPC();
+  const { data } = useQuery(trpc.hello.queryOptions({text:"warahmatullahi wabarakatuh"}));
+
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-sidebar-accent via-sidebar/50 to-sidebar/50 text-white px-6">
       <div className="p-10 rounded-2xl border border-[#5D6B68]/10 bg-linear-to-r/oklch from-sidebar-accent via-sidebar/50 to-sidebar/50 shadow-lg backdrop-blur-sm max-w-3xl w-full text-center">
         <h1 className="text-5xl font-bold text-[#5D6B68] tracking-tight mb-4">
-          Welcome to <span className="text-white">Isra.r</span>
+            {data?.greeting || 'Welcome to Isra.r'}
         </h1>
 
         <p className="text-md text-gray-300 mb-6">
