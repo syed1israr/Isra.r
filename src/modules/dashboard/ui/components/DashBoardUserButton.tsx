@@ -32,6 +32,7 @@ const DashBoardUserButton = () => {
         <DrawerTrigger className="rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 overflow-hidden">
          <Avatar className="w-10 h-10">
             { data.user.image ? (  <AvatarImage
+            key={imageUrl}
             src={imageUrl}
             className="w-10 h-10 rounded-full object-cover"
           />) : <GenerateAvatar 
