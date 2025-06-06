@@ -1,7 +1,5 @@
 'use client';
 
-import { Error_state } from "@/components/Error-state";
-import { LoadingState } from "@/components/loading-state";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
