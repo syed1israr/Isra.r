@@ -10,13 +10,14 @@ export const AgentsView = () => {
 
   return (
     <div>
+
       <div className="space-y-4">
         <h1 className="text-2xl font-bold">Agents</h1>
         <div className="grid gap-4">
           {data?.map((agent) => (
             <div key={agent.id} className="p-4 border rounded-lg">
               <h3 className="font-semibold">{agent.name}</h3>
-              <p className="text-gray-600">{agent.description}</p>
+              <p className="text-gray-600">{agent.instructions}</p>
             </div>
           ))}
         </div>
