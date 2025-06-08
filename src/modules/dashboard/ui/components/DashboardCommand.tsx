@@ -1,5 +1,5 @@
 'use client'
-import { CommandInput ,CommandDialog, CommandList, CommandItem} from "@/components/ui/command"
+import { CommandInput, CommandItem, CommandList, CommandResponsiveDialoge } from "@/components/ui/command";
 import { Dispatch, SetStateAction } from "react";
 
 interface props{
@@ -10,14 +10,18 @@ interface props{
 const DashboardCommand = ({open,setOpen}:props) => {
     console.log("dashBoardCommand",open,setOpen)
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandResponsiveDialoge open={open} onOpenChange={setOpen}>
         <CommandInput
         placeholder="Find a meeting or Agent"
         />
         <CommandList>
-            <CommandItem>Test</CommandItem>
+            <CommandItem>Test1</CommandItem>
+            <CommandItem>Test2</CommandItem>
+            <CommandItem>Test3</CommandItem>
+            <CommandItem>Test4</CommandItem>
+            <CommandItem>Test5</CommandItem>
         </CommandList>
-    </CommandDialog>
+    </CommandResponsiveDialoge>
   )
 }
 
