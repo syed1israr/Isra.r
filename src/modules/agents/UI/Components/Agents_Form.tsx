@@ -18,29 +18,29 @@ import { toast } from "sonner";
 interface props {
   onSuccess?: () => void;
   onCancel?: () => void;
-  initalValues?: AgentGetOne;
+  initialValues?: AgentGetOne;
 }
 
-export const AgentsForm = ({ onSuccess, onCancel, initalValues }: props) => {
+export const AgentsForm = ({ onSuccess, onCancel, initialValues }: props) => {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof AgentSchema>>({
     resolver: zodResolver(AgentSchema),
     defaultValues: {
-      name: initalValues?.name || "",
-      instructions: initalValues?.instructions || "",
+      name: initialValues?.name || "",
+      instructions: initialValues?.instructions || "",
     },
   });
 
-  const isEdit = !!initalValues?.id;
+  const isEdit = !!initialValues?.id;
 
   const createAgent = useMutation(trpc.agents.create.mutationOptions({
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions());
 
-      if( initalValues?.id){
-        await queryClient.invalidateQueries(trpc.agents.getOne.queryOptions({ id: initalValues.id }));
+      if( initialValues?.id){
+        await queryClient.invalidateQueries(trpc.agents.getOne.queryOptions({ id: initialValues.id }));
       }
       onSuccess?.();
     },
