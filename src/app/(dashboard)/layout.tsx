@@ -1,4 +1,5 @@
 import { SidebarProvider } from '@/components/ui/sidebar'
+import { Toaster } from '@/components/ui/sonner'
 import DashboardNavbarComponent from '@/modules/dashboard/ui/components/DashboardNavbarComponent'
 import DashboardSidebar from '@/modules/dashboard/ui/components/DashboardSidebar'
 import React from 'react'
@@ -13,6 +14,7 @@ const layout = ({children}:props) => {
             <DashboardSidebar/>
             <main className='flex flex-col h-screen w-screen bg-muted'>
              <DashboardNavbarComponent />
+             <Toaster/>
             {children}
             </main>
         </SidebarProvider>
