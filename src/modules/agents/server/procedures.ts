@@ -95,14 +95,24 @@ getMany: protectedProcedure
 
   update : protectedProcedure
   .input(AgentUpdateSchema)
-  .mutation( async({ctx,input})=>{
-    const [ UpdatedAgent ] = await db.update(agents).set(input).where(
-      and(
-        eq(agents.id,input.id),
-        eq(agents.userId,ctx.auth.user.id)
-      ),
-    ).returning();
-    if( !UpdatedAgent ) throw new TRPCError({code :"NOT_FOUND",message:"Agent Not found"});
+  .mutation(async ({ ctx, input }) => {
+    const { id, ...updateData } = input;
+    const [UpdatedAgent] = await db
+      .update(agents)
+      .set(updateData)
+      .where(
+        and(
+          eq(agents.id, id),
+          eq(agents.userId, ctx.auth.user.id)
+        )
+      )
+      .returning();
+    if (!UpdatedAgent) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Agent Not found",
+      });
+    }
     return UpdatedAgent;
   })
 
