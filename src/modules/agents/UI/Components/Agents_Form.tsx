@@ -62,7 +62,7 @@ export const AgentsForm = ({ onSuccess, onCancel, initalValues }: props) => {
        },
        
        onError: (error) => {
-         toast.error(error.message || "Failed to create agent");
+         toast.error(error.message || "Failed to update agent");
        },
      }));
 
