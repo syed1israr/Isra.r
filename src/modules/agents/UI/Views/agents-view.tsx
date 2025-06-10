@@ -2,12 +2,13 @@
 
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { DataTable } from "../Components/data-table";
+
 import { columns } from "../Components/Columns";
 import { Empty_state } from "@/components/Empty_state";
 import { useAgentsFilters } from "../../hooks/Use_Agents_Filters";
 import DataPagination from "../Components/DataPagination";
 import { useRouter } from "next/navigation";
+import { Generic_Data_table } from "@/components/Generic_Data_table";
 
 export const AgentsView = () => {
   const trpc = useTRPC();
@@ -27,7 +28,7 @@ export const AgentsView = () => {
         />
       ) : (
         <>
-          <DataTable
+          <Generic_Data_table
            data={data.items} 
            columns={columns}
            onRowClick={(r)=>router.push(`/agents/${r.id}`)}

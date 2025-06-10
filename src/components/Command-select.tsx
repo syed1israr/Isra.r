@@ -16,8 +16,7 @@ interface props {
     onSearch ?: ( value : string) => void;
     value : string;
     placeholder ?: string;
--   isSearchable ?: string;
-+   isSearchable ?: boolean;
+    isSearchable ?: boolean;
     className ?: string;
 }
 
