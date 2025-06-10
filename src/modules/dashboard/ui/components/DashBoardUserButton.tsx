@@ -12,11 +12,12 @@ import { Button } from "@/components/ui/button"
 
 
 const DashBoardUserButton = () => {
+  const router = useRouter();
   const { data, isPending } = authClient.useSession()
   const isMobile = useIsMobile();
  
   if (isPending || !data?.user) return null
-  const router = useRouter();
+ 
   const imageUrl = data.user.image ?? undefined
   const onLogOut = () =>{
      authClient.signOut({
