@@ -18,7 +18,7 @@ getMany: protectedProcedure
     const { search, page, pageSize } = input;
     
     const data = await db
-      .select({ meetingCount: sql<number>`1`, ...getTableColumns(agents) })
+      .select({ meetingCount: sql<number>`8`, ...getTableColumns(agents) })
       .from(agents)
       .where(
         and(
