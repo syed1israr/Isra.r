@@ -1,6 +1,6 @@
-import { nanoid } from "nanoid"
-import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core";
-import { use } from "react";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { nanoid } from "nanoid";
+
 
 export const user = pgTable("user", {
  id: text('id').primaryKey(),
@@ -63,3 +63,4 @@ export const agents = pgTable("agents", {
  createdAt : timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
  updatedAt : timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
 })
+

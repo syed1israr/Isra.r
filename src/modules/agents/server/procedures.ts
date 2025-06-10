@@ -4,7 +4,7 @@ import { agents } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
-import { AgentSchema } from "../schemas";
+import { AgentSchema, AgentUpdateSchema } from "../schemas";
 import { TRPCError } from "@trpc/server";
 
 export const agentsRouter = createTRPCRouter({
@@ -77,5 +77,34 @@ getMany: protectedProcedure
 
     return ExistingAgent;
   }),
+
+
+  remove : protectedProcedure
+  .input(z.object({id : z.string()}))
+  .mutation( async({ctx,input})=>{
+    const [ removedAgent ] = await db.delete(agents).where(
+      and(
+        eq(agents.id,input.id),
+        eq(agents.userId,ctx.auth.user.id)
+      ),
+    ).returning();
+    if( !removedAgent ) throw new TRPCError({code :"NOT_FOUND",message:"Agent Not found"});
+    return removedAgent;
+  }),
+
+
+  update : protectedProcedure
+  .input(AgentUpdateSchema)
+  .mutation( async({ctx,input})=>{
+    const [ UpdatedAgent ] = await db.update(agents).set(input).where(
+      and(
+        eq(agents.id,input.id),
+        eq(agents.userId,ctx.auth.user.id)
+      ),
+    ).returning();
+    if( !UpdatedAgent ) throw new TRPCError({code :"NOT_FOUND",message:"Agent Not found"});
+    return UpdatedAgent;
+  })
+
 
 });
