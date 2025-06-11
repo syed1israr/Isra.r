@@ -20,7 +20,7 @@ export const CallConnect = ( {meetingId, meetingName, userId, userName, userImag
    const { mutateAsync : generateToken} = useMutation(trpc.meetings.generateToken.mutationOptions())
    const [client, setclient] = useState<StreamVideoClient>();
    useEffect(()=>{
-    const _clinet = new StreamVideoClient({
+    const _client = new StreamVideoClient({
         apiKey: process.env.NEXT_PUBLIC_STREAM_VIDEO_API_KEY!,
         user: {
             id : userId,
@@ -29,9 +29,9 @@ export const CallConnect = ( {meetingId, meetingName, userId, userName, userImag
         },
         tokenProvider:generateToken
     })
-    setclient(_clinet);
+    setclient(_client);
     return () =>{
-        _clinet.disconnectUser();
+        _client.disconnectUser();
         setclient(undefined)
     }
    },[userId, userName, userImage,generateToken])
