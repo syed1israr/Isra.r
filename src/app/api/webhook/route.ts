@@ -72,7 +72,7 @@ export async function POST(req:NextRequest){
         if( !existingAgent ){
                 return NextResponse.json({error : "Missing Agent"}, { status : 404 });
         }
-        const call = streamVideo.video.call("default",meetindId);
+        const call = streamVideo.video.call("default", meetingId);
         const realTimeClient = await streamVideo.video.connectOpenAi({
             call,
             openAiApiKey : process.env.NEXT_OPEN_API_KEy!.trim(),
