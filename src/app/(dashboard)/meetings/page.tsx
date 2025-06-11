@@ -9,10 +9,20 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import type { SearchParams } from 'nuqs/server';
+import { LoadSearchParams } from '@/modules/meetings/params';
 
-const page = async () => {
+
+interface props {
+  SearchParams : Promise<SearchParams>;
+
+}
+const page = async ({SearchParams} : props) => {
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({}));
+  const params = await LoadSearchParams(SearchParams);
+  void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({...params}));
+
+  
 
     const session = await auth.api.getSession({
         headers: await headers(),
@@ -26,7 +36,7 @@ const page = async () => {
       <Meeting_List_Headers/>
       <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<MeetingsViewLoading/>}>
-    <ErrorBoundary fallback={<MeetingsViewError/>} >
+      <ErrorBoundary fallback={<MeetingsViewError/>} >
      <MeetingsView/>
      </ErrorBoundary>
       </Suspense>
