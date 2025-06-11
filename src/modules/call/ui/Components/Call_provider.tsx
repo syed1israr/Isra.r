@@ -26,7 +26,11 @@ export const CallProvider = ({ meetingId, meetingName} : props) =>{
         userId = { data.user.id }
         userName = { data.user.name }
         userImage={
-            data.user.name ?? GenerateAvatarUri({seed : data.user.name, variant : "initials"})
+            data.user.image ??
+            GenerateAvatarUri({
+                seed: data.user.name || data.user.id,
+                variant: "initials",
+            })
         }
         />
     )
