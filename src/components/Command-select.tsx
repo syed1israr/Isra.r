@@ -32,7 +32,10 @@ className
 } : props) => {
     const [open,setopen] = useState(false);
     const selectOptions = options.find((op) => op.value == value);
-
+    const handleOpenChange = (value : boolean) =>{
+        onSearch?.("");
+        setopen(value)
+    }
   return (
     <>
     <Button
@@ -53,7 +56,7 @@ className
     <CommandResponsiveDialoge
     shouldFilter={!onSearch}
     open={open}
-    onOpenChange={setopen}
+    onOpenChange={handleOpenChange}
     >
         <CommandInput
         placeholder='Search...'
