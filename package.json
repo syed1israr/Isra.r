@@ -60,6 +60,7 @@
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.0",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.17.3",
     "humanize-duration": "^3.33.0",
     "inngest": "^3.39.1",
     "input-otp": "^1.4.2",
