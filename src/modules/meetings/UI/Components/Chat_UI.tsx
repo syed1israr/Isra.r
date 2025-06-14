@@ -63,7 +63,7 @@ export const Chat_UI = ({userImage,userName,userId,meetingName,meetingId} : prop
             <Chat client={client}>
                 <WorkingChannel channel = {Channel}>
                     <Window>
-                        <div className="flex-1 overflow-y-auto max-h-[cal(100vh-23rem)] border-b">
+                        <div className="flex-1 overflow-y-auto max-h-[calc(100vh-23rem)] border-b">
                             <MessageList/>
                         </div>
                         <MessageInput/>
