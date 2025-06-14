@@ -9,6 +9,8 @@ import { BookOpenTextIcon, ClockFadingIcon, FileTextIcon, FileVideoIcon, Sparkle
 import Link from 'next/link'
 import { MeetingGetOne } from '../../types'
 import  Markdown  from "react-markdown"
+import Transcript from './Transcript'
+import { ChatProvider } from './Chat_Provider'
 
 interface props{
     data : MeetingGetOne
@@ -64,6 +66,12 @@ export const Completed_state = ({ data } : props) => {
                     controls
                     />
                 </div>
+            </TabsContent>
+            <TabsContent value='Transcript'>
+                <Transcript meetingId = { data.id} />
+            </TabsContent>
+            <TabsContent value='chat'>
+                <ChatProvider meetingId={data.id} meetingName={data.name}/>
             </TabsContent>
             <TabsContent value='summary'>
                 <div className='bg-white rounded-lg border'>
