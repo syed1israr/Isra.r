@@ -8,20 +8,20 @@ import DashboardCommand from './DashboardCommand'
 const DashboardNavbarComponent = () => { 
   const {state, toggleSidebar, isMobile } = useSidebar();
   const [commandOpen, setcommandOpen] = useState(false)
-  useEffect(()=>{
-    const down = (e:KeyboardEvent)=>{
-        
-        if( e.key === "K" && (e.metaKey || e.ctrlKey )){
-            e.preventDefault();
-            setcommandOpen((open) => !open);
-        }
-        document.addEventListener("keydown", down);
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "K" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setcommandOpen((open) => !open);
+      }
+    };
 
-        return () => {
-            document.removeEventListener("keydown", down);
-        }
-    }
-  },[])
+    document.addEventListener("keydown", down);
+    return () => {
+      document.removeEventListener("keydown", down);
+    };
+  }, []);
+
   return (
     <>
       <DashboardCommand open={commandOpen} setOpen={setcommandOpen}/>

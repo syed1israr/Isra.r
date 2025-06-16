@@ -1,9 +1,8 @@
 'use client';
-import { authClient } from '@/lib/auth-client';
 import { motion } from 'framer-motion';
 
 export const HomeView = () => {
-  const { data: session } = authClient.useSession();
+ 
 
   return (
     <main className="min-h-screen bg-white text-black px-6 py-12">

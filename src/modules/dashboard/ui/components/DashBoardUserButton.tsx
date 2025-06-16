@@ -63,7 +63,7 @@ const DashBoardUserButton = () => {
               <CreditCardIcon className="size-4 text-black" />
               Billing
             </Button>
-            <Button onClick={()=>{onLogOut}} variant={"outline"} >
+            <Button onClick={()=>{onLogOut()}} variant={"outline"} >
               <LogOutIcon  className="size-4 text-black" />
               Logout
             </Button>
@@ -113,7 +113,7 @@ const DashBoardUserButton = () => {
         </DropdownMenuItem>
         <DropdownMenuItem
         className="cursor-pointer flex items-center justify-between"
-        onClick={onLogOut}
+        onClick={()=>{onLogOut();}}
         >
             Logout
             <LogOutIcon className="size-4"/>

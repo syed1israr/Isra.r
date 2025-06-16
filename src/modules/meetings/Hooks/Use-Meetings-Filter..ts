@@ -1,6 +1,5 @@
 import { DEFAULT_PAGE } from "@/constants"
-import { parseAsInteger, parseAsString, useQueryStates ,parseAsStringEnum} from "nuqs"
-import { object } from "zod"
+import { parseAsInteger, parseAsString, parseAsStringEnum, useQueryStates } from "nuqs"
 import { MeetingStatus } from "../types"
 
 export const useMeetingsFilter = () =>{

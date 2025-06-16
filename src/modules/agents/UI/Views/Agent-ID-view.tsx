@@ -1,16 +1,16 @@
 'use client'
 import { Error_state } from "@/components/Error-state";
+import { GenerateAvatar } from "@/components/generator";
 import { LoadingState } from "@/components/loading-state";
+import { Badge } from "@/components/ui/badge";
+import { useConfirm } from "@/hooks/use-confirm";
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import AgentIdViewHeader from "../Components/AgentIdViewHeader";
-import { GenerateAvatar } from "@/components/generator";
-import { Badge } from "@/components/ui/badge";
 import { VideoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { useConfirm } from "@/hooks/use-confirm"
 import { useState } from "react";
+import { toast } from "sonner";
+import AgentIdViewHeader from "../Components/AgentIdViewHeader";
 import { UpdateAgentDialog } from "../Components/Update-Agent-Dialog";
 
 interface props {
@@ -25,11 +25,11 @@ export const AgentIdView = ({ agentId }: props) => {
     const [updateAgentDialogOpen, setupdateAgentDialogOpen] = useState(false)
     const removeAgent = useMutation(
         trpc.agents.remove.mutationOptions({
-            onSuccess: async () =>{
-                await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({})),
-                await queryClient.invalidateQueries(trpc.premium.getFreeUsage.queryOptions());
-                router.push("/agents")
-            },
+         onSuccess: async () => {
+                    await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
+                    await queryClient.invalidateQueries(trpc.premium.getFreeUsage.queryOptions());
+                    router.push("/agents");
+                },
             onError: (error) =>{
                 toast.error(error.message)
             }

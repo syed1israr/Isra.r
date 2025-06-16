@@ -1,7 +1,7 @@
-import React, { ReactNode, useState } from 'react'
-import { Button } from './ui/button';
-import { ChevronsUpDownIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ChevronsUpDownIcon } from 'lucide-react';
+import { ReactNode, useState } from 'react';
+import { Button } from './ui/button';
 import { CommandEmpty, CommandInput, CommandItem, CommandList, CommandResponsiveDialoge } from './ui/command';
 
 
@@ -26,7 +26,7 @@ onSelect,
 onSearch,
 value,
 placeholder = "Select an option",
-isSearchable,
+
 className
 
 } : props) => {

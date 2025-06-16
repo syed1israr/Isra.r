@@ -1,16 +1,16 @@
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 import { db } from "@/db";
-import {  agents, meetings, user } from "@/db/schema";
+import { agents, meetings, user } from "@/db/schema";
+import { GenerateAvatarUri } from "@/lib/avatar";
+import { streamChat } from "@/lib/stream-chat";
+import { streamVideo } from "@/lib/stream_video";
 import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { and, count, desc, eq, getTableColumns, ilike, inArray, sql } from "drizzle-orm";
+import JSONL from "jsonl-parse-stringify";
 import { z } from "zod";
 import { meetingInsertSchema, meetingUpdateSchema } from "../schemas";
 import { MeetingStatus, StreamTranscriptItem } from "../types";
-import { streamVideo } from "@/lib/stream_video";
-import { GenerateAvatarUri } from "@/lib/avatar";
-import JSONL from "jsonl-parse-stringify";
-import { streamChat } from "@/lib/stream-chat";
 
 export const meetingsRouter = createTRPCRouter({
 
@@ -282,7 +282,7 @@ export const meetingsRouter = createTRPCRouter({
         }),
 
         generateChatToken : protectedProcedure
-        .mutation( async({ ctx, input}) => {
+        .mutation( async({ ctx}) => {
           const token = streamChat.createToken(ctx.auth.user.id);
           await streamChat.upsertUser({
             id : ctx.auth.user.id,

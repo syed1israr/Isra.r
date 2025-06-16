@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { agents, meetings, user } from "@/db/schema";
+import { agents, meetings } from "@/db/schema";
 import { inngest } from "@/ingest/client";
 import { GenerateAvatarUri } from "@/lib/avatar";
 import { streamChat } from "@/lib/stream-chat";
@@ -11,17 +11,15 @@ import {
     CallSessionStartedEvent,
     CallTranscriptionReadyEvent,
     MessageNewEvent,
-
 } from "@stream-io/node-sdk";
 
 import { and, eq, not } from "drizzle-orm";
-import { Mode } from "inngest/helpers/env";
 
 import { NextRequest, NextResponse } from "next/server";
 
 
-import OpenAI from "openai"
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs"
+import OpenAI from "openai";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 function verifySignature(body : string, signature : string ) : boolean{
     return streamVideo.verifyWebhook(body,signature)

@@ -2,14 +2,9 @@
 
 import { useState } from 'react';
 
-import Link from 'next/link';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -18,9 +13,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Alert, AlertTitle } from '@/components/ui/alert';
-import { OctagonAlertIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { OctagonAlertIcon } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { z } from 'zod';
 
 const formSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -166,7 +167,7 @@ export const SignInView = () => {
           </Form>
 
           <div className="bg-radial from-sidebar-accent to-sidebar hidden md:flex flex-col gap-y-4 items-center justify-center">
-            <img src="/logo.svg" alt="Logo" className="h-[92px] w-[92px]" />
+            <Image src="/logo.svg" alt="Logo" className="h-[92px] w-[92px]" />
             <p className="text-2xl font-semibold text-white">Tandemly </p>
           </div>
         </CardContent>

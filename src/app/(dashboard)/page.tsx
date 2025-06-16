@@ -1,20 +1,16 @@
+// ✅ correct way
 import { auth } from '@/lib/auth'
 import { HomeView } from '@/modules/home/ui/view/home-view'
-import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import React from 'react'
-import { caller } from '@/trpc/server'
+import { redirect } from 'next/navigation'
 
-const page = async () => {
-  // const data = await caller.hello({text: "warahmatullahi wabarakatuh"});
+export default async function Page() {
   const session = await auth.api.getSession({
     headers: await headers(),
   }) 
-  if( !session){
-    redirect("/sign-in");
+  if (!session) {
+    redirect("/sign-in")
   }
 
   return <HomeView/>
 }
-
-export default page

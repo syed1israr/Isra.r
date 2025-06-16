@@ -1,10 +1,10 @@
 "use client"
 
 import { GenerateAvatar } from "@/components/generator"
+import { Badge } from "@/components/ui/badge"
 import { ColumnDef } from "@tanstack/react-table"
 import { CornerDownRightIcon, VideoIcon } from "lucide-react"
-import { AgentGetMany, AgentGetOne } from "../../types"
-import { Badge } from "@/components/ui/badge"
+import { AgentGetMany } from "../../types"
 
 
 

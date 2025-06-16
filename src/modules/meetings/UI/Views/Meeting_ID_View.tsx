@@ -5,15 +5,14 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import MeetingIdViewHeader from "../Components/MeetingIdViewHeader";
-import { UpdateMeetingDialog } from "../Components/UpdateMeetingDialog";
 import { useState } from "react";
-import { meetings } from "@/db/schema";
-import { UpComingState } from "../Components/UpcomingState";
 import { ActiveState } from "../Components/ActiveState";
 import { CancelledState } from "../Components/CancelledState";
+import { Completed_state } from "../Components/Completed_state";
+import MeetingIdViewHeader from "../Components/MeetingIdViewHeader";
 import { ProcessingState } from "../Components/ProcessingState";
-import {Completed_state} from "../Components/Completed_state";
+import { UpComingState } from "../Components/UpcomingState";
+import { UpdateMeetingDialog } from "../Components/UpdateMeetingDialog";
 
 interface props {
     meetingId : string;
@@ -77,8 +76,8 @@ export const MeetingIdView = ( {meetingId} : props) =>{
             { isActive && <ActiveState meetingId={meetingId}/> }
             { isUpcoming && <UpComingState 
             meetingId={meetingId}
-            onCancelMeeting={()=>{}}
-            isCancelling={false}
+            
+       
             /> }
             { isProcessing && <ProcessingState/> }
             { isCompleted && <Completed_state data={data} />}

@@ -13,23 +13,42 @@ import type { SearchParams } from 'nuqs/server';
 import { LoadSearchParams } from '@/modules/meetings/params';
 
 
+
 interface props {
-  SearchParams : Promise<SearchParams>;
+  searchParams : Promise<SearchParams>;
 
 }
-const page = async ({SearchParams} : props) => {
-  const queryClient = getQueryClient();
-  const params = await LoadSearchParams(SearchParams);
-  void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({...params}));
 
-  
 
-    const session = await auth.api.getSession({
+ function MeetingsViewLoading(){
+    return (
+        <LoadingState
+            title="Loading Meetings"
+            description="this my take few seconds"
+        />
+    )
+}
+ function MeetingsViewError(){
+    return (
+        <Error_state
+            title="Error Loading Meetings"
+            description="Something went Wrong"
+        />
+    )
+}
+
+
+const Page = async ({searchParams} : props) => {
+   const session = await auth.api.getSession({
         headers: await headers(),
       }) 
       if( !session){
         redirect("/sign-in");
       }
+
+  const queryClient = getQueryClient();
+  const params = await LoadSearchParams(searchParams);
+  void queryClient.prefetchQuery(trpc.meetings.getMany.queryOptions({...params}));
 
   return (  
     <>
@@ -47,22 +66,7 @@ const page = async ({SearchParams} : props) => {
   )
 }
 
-export default page
 
 
-export const MeetingsViewLoading = () => {
-    return (
-        <LoadingState
-            title="Loading Meetings"
-            description="this my take few seconds"
-        />
-    )
-}
-export const MeetingsViewError = () => {
-    return (
-        <Error_state
-            title="Error Loading Meetings"
-            description="Something went Wrong"
-        />
-    )
-}
+
+export default Page;
