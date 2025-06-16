@@ -17,6 +17,7 @@ import { meetingInsertSchema } from "../../schemas";
 import { useState } from "react";
 import Command_select from "@/components/Command-select";
 import { NewAgentDialog } from "@/modules/agents/UI/Components/newAgentDialog";
+import { useRouter } from "next/navigation";
 
 interface props {
   onSuccess?: (id?:string) => void;
@@ -27,6 +28,7 @@ interface props {
 export const MeetingForm = ({ onSuccess, onCancel, initalValues }: props) => {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+  const router = useRouter();
   const [agentSearch, setagentSearch] = useState("")
   const [openNewAgentDialog, setopenNewAgentDialog] = useState(false)
 
@@ -61,6 +63,9 @@ export const MeetingForm = ({ onSuccess, onCancel, initalValues }: props) => {
     
     onError: (error) => {
       toast.error(error.message || "Failed to create meeting");
+        if( error.data?.code === "FORBIDDEN" ){
+          router.push("/upgrade")
+      }
     },
   }));
 
@@ -68,10 +73,11 @@ export const MeetingForm = ({ onSuccess, onCancel, initalValues }: props) => {
    const UpdateMeeting = useMutation(trpc.meetings.update.mutationOptions({
        onSuccess: async () => {
          await queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}));
-   
+         await queryClient.invalidateQueries(trpc.premium.getFreeUsage.queryOptions());
          if( initalValues?.id){
            await queryClient.invalidateQueries(trpc.meetings.getOne.queryOptions({ id: initalValues.id }));
          }
+         
          onSuccess?.();
        },
        

@@ -59,7 +59,7 @@ const Transcript = ({meetingId} : props) => {
                                 <p className='text-sm text-blue-500 font-medium'>
                                     {
                                         format(
-                                            new Date(0,0,0,0,0,0,item.start_ts),
+                                            new Date(0,0,0,0,0,item.start_ts,0),
                                             "mm:ss"
                                         )
                                     }
