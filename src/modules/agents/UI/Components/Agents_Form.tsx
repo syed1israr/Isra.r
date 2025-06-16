@@ -14,6 +14,7 @@ import { useTRPC } from "@/trpc/client";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface props {
   onSuccess?: () => void;
@@ -24,7 +25,7 @@ interface props {
 export const AgentsForm = ({ onSuccess, onCancel, initalValues }: props) => {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof AgentSchema>>({
     resolver: zodResolver(AgentSchema),
     defaultValues: {
@@ -38,15 +39,20 @@ export const AgentsForm = ({ onSuccess, onCancel, initalValues }: props) => {
   const createAgent = useMutation(trpc.agents.create.mutationOptions({
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
-
+      await queryClient.invalidateQueries(trpc.premium.getFreeUsage.queryOptions());
       if( initalValues?.id){
         await queryClient.invalidateQueries(trpc.agents.getOne.queryOptions({ id: initalValues.id }));
       }
+   
+
       onSuccess?.();
     },
     
     onError: (error) => {
       toast.error(error.message || "Failed to create agent");
+      if( error.data?.code === "FORBIDDEN" ){
+          router.push("/upgrade")
+      }
     },
   }));
 
