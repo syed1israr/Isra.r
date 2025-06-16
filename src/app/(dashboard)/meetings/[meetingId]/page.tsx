@@ -38,3 +38,4 @@ const page = async ({params} : props) => {
 }
 
 export default page
+

@@ -5,19 +5,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 
+import Command_select from "@/components/Command-select";
 import { GenerateAvatar } from "@/components/generator";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useTRPC } from "@/trpc/client";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { MeetingGetOne } from "../../types";
-import { meetingInsertSchema } from "../../schemas";
-import { useState } from "react";
-import Command_select from "@/components/Command-select";
 import { NewAgentDialog } from "@/modules/agents/UI/Components/newAgentDialog";
+import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import { meetingInsertSchema } from "../../schemas";
+import { MeetingGetOne } from "../../types";
 
 interface props {
   onSuccess?: (id?:string) => void;
